@@ -1,0 +1,16 @@
+type User {
+  id: String!
+  name: String!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Auth {
+  user: User!
+  token: String!
+}
+
+type Mutation {
+  signIn(email: String!, password: String!): Auth!
+}
