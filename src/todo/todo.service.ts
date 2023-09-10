@@ -16,6 +16,7 @@ export class TodoService {
     const todo = this.todoRepository.create({
       description: createTodoInput.description,
       checked: createTodoInput.checked,
+      userId: createTodoInput.userId,
     });
 
     return this.todoRepository.save(todo);
@@ -25,8 +26,10 @@ export class TodoService {
     return this.todoRepository.findOneBy({ id });
   }
 
-  findAll() {
-    return this.todoRepository.find();
+  findAll(userId: string) {
+    return this.todoRepository.find({
+      where: { userId },
+    });
   }
 
   update(id: string, updateTodoInput: UpdateTodoInput) {

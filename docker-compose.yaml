@@ -1,6 +1,19 @@
 version: '1'
 
 services:
+  api:
+    build: .
+    container_name: gemini_api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - gemini-network
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
   db:
     container_name: postgres
     image: postgres:latest
@@ -12,7 +25,9 @@ services:
       POSTGRES_DB: gemini
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - gemini-network
 
-volumes:
-  postgres-data:
-    driver: local
+networks:
+  gemini-network:
+    driver: bridge

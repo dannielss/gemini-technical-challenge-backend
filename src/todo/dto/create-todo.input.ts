@@ -7,4 +7,7 @@ export class CreateTodoInput {
 
   @Field()
   checked: boolean;
+
+  @Field()
+  userId: string;
 }

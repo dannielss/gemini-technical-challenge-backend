@@ -16,8 +16,8 @@ export class TodoResolver {
   }
 
   @Query(() => [Todo], { name: 'todos' })
-  findAll() {
-    return this.todoService.findAll();
+  findAll(@Args('userId', { type: () => String }) userId: string) {
+    return this.todoService.findAll(userId);
   }
 
   @Mutation(() => Todo)

@@ -1,14 +1,17 @@
 import { ObjectType, Field } from '@nestjs/graphql';
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
-@Entity()
+@Entity({ name: 'todos' })
 export class Todo {
   @Field()
   @PrimaryGeneratedColumn('uuid')
@@ -21,6 +24,14 @@ export class Todo {
   @Field({ defaultValue: false })
   @Column({ default: false })
   checked: boolean;
+
+  @Column()
+  userId: string;
+
+  @Field()
+  @ManyToOne(() => User, (user) => user.todos)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @Field()
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
