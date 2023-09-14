@@ -2,7 +2,11 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { NotFoundException, UseGuards } from '@nestjs/common';
+import {
+  ConflictException,
+  NotFoundException,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Resolver('User')
@@ -10,8 +14,11 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Mutation('createUser')
-  create(@Args('createUserInput') createUserInput: CreateUserInput) {
-    console.log(createUserInput);
+  async create(@Args('createUserInput') createUserInput: CreateUserInput) {
+    const user = await this.userService.findOneByEmail(createUserInput.email);
+
+    if (user) throw new ConflictException('User already exists');
+
     return this.userService.create(createUserInput);
   }
 
