@@ -26,10 +26,23 @@ export class TodoService {
     return this.todoRepository.findOneBy({ id });
   }
 
-  findAll(userId: string) {
-    return this.todoRepository.find({
-      where: { userId },
+  async findAll(userId: string, page: number, checked: boolean) {
+    const [result, total] = await this.todoRepository.findAndCount({
+      where: { userId, checked },
+      take: 8,
+      skip: (page - 1) * 8,
     });
+
+    const response = {
+      list: result,
+      pagination: {
+        total,
+        page,
+        totalPages: Math.ceil(total / 8),
+      },
+    };
+
+    return response;
   }
 
   update(id: string, updateTodoInput: UpdateTodoInput) {

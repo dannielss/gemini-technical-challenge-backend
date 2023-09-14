@@ -5,7 +5,7 @@ import { CreateTodoInput } from './dto/create-todo.input';
 import { UpdateTodoInput } from './dto/update-todo.input';
 import { DeleteResult } from 'typeorm';
 import { NotFoundException, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../src/auth/auth.guard';
 
 @UseGuards(AuthGuard)
 @Resolver(() => Todo)
@@ -18,8 +18,12 @@ export class TodoResolver {
   }
 
   @Query(() => [Todo], { name: 'todos' })
-  findAll(@Args('userId', { type: () => String }) userId: string) {
-    return this.todoService.findAll(userId);
+  findAll(
+    @Args('userId', { type: () => String }) userId: string,
+    @Args('page', { type: () => Int }) page: number,
+    @Args('checked', { type: () => Boolean }) checked: boolean,
+  ) {
+    return this.todoService.findAll(userId, page, checked);
   }
 
   @Mutation(() => Todo)

@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { NotFoundException, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../src/auth/auth.guard';
 
 @Resolver('User')
 export class UserResolver {
@@ -11,6 +11,7 @@ export class UserResolver {
 
   @Mutation('createUser')
   create(@Args('createUserInput') createUserInput: CreateUserInput) {
+    console.log(createUserInput);
     return this.userService.create(createUserInput);
   }
 

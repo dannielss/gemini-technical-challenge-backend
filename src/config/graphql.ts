@@ -72,8 +72,19 @@ export class UpdateResult {
     affected?: Nullable<number>;
 }
 
+export class Pagination {
+    total?: Nullable<number>;
+    page?: Nullable<number>;
+    totalPages?: Nullable<number>;
+}
+
+export class TodoResult {
+    list?: Nullable<Nullable<Todo>[]>;
+    pagination?: Nullable<Pagination>;
+}
+
 export abstract class IQuery {
-    abstract todos(userId: string): Nullable<Nullable<Todo>[]> | Promise<Nullable<Nullable<Todo>[]>>;
+    abstract todos(userId: string, page: number, checked: boolean): Nullable<TodoResult> | Promise<Nullable<TodoResult>>;
 
     abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }

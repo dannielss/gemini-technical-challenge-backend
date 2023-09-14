@@ -25,8 +25,19 @@ input TodoInput {
   userId: String!
 }
 
+type Pagination {
+  total: Int
+  page: Int
+  totalPages: Int
+}
+
+type TodoResult {
+  list: [Todo]
+  pagination: Pagination
+}
+
 type Query {
-  todos(userId: String!): [Todo]
+  todos(userId: String!, page: Int!, checked: Boolean!): TodoResult
 }
 
 type Mutation {
