@@ -5,7 +5,7 @@ import { CreateTodoInput } from './dto/create-todo.input';
 import { UpdateTodoInput } from './dto/update-todo.input';
 import { DeleteResult } from 'typeorm';
 import { NotFoundException, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '../../src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @UseGuards(AuthGuard)
 @Resolver(() => Todo)

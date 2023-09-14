@@ -1,6 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Todo } from '../../../src/todo/entities/todo.entity';
-import { hash } from '../../../src/utils/hash';
+import { Todo } from 'src/todo/entities/todo.entity';
+import { hash } from 'src/utils/hash';
 import {
   BeforeInsert,
   Column,
